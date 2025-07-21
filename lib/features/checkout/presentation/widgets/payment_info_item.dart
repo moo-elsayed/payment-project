@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/utils/styles.dart';
+import '../../../../core/utils/styles.dart';
 
 class PaymentInfoItem extends StatelessWidget {
   const PaymentInfoItem({super.key, required this.text1, required this.text2});

@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_project/core/widgets/custom_button.dart';
 import 'package:payment_project/core/widgets/total_price.dart';
-import 'package:payment_project/features/checkout/data/cubits/payment_cubit/payment_cubit.dart';
-import 'package:payment_project/features/checkout/data/repos/checkout_repo.dart';
 import 'package:payment_project/features/checkout/data/repos/checkout_repo_imp.dart';
-import 'package:payment_project/features/checkout/presentation/views/my_cart_view/widgets/payment_methods_bottom_sheet.dart';
-import 'package:payment_project/features/checkout/presentation/views/payment_details/payment_details_view.dart';
+import 'package:payment_project/features/checkout/presentation/widgets/payment_methods_bottom_sheet.dart';
 
+import '../managers/cubits/payment_cubit/payment_cubit.dart';
 import 'order_info_item.dart';
 
 class MyCartViewBody extends StatelessWidget {
@@ -66,8 +63,9 @@ class MyCartViewBody extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return BlocProvider(
-                      create: (context) => PaymentCubit(CheckOutRepoImp()),
-                      child: const PaymentMethodsBottomSheet());
+                    create: (context) => PaymentCubit(CheckOutRepoImp()),
+                    child: const PaymentMethodsBottomSheet(),
+                  );
                 },
               );
             },

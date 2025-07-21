@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_project/features/checkout/data/cubits/payment_cubit/payment_states.dart';
 import 'package:payment_project/features/checkout/data/repos/checkout_repo.dart';
+import 'package:payment_project/features/checkout/presentation/managers/cubits/payment_cubit/payment_states.dart';
 
-import '../../models/stripe/payment_intent/payment_intent_input.dart';
+import '../../../../data/models/stripe/payment_intent/payment_intent_input.dart';
 
 class PaymentCubit extends Cubit<PaymentStates> {
   PaymentCubit(this.checkOutRepo) : super(PaymentInitial());
@@ -16,8 +14,11 @@ class PaymentCubit extends Cubit<PaymentStates> {
     var result =
         await checkOutRepo.makePayment(paymentIntentInput: paymentIntentInput);
     result.fold(
-        (failure) => emit(PaymentFailure(errorMessage: failure.errorMessage)),
-        (r) => emit(PaymentSuccess()));
+      (failure) => emit(PaymentFailure(errorMessage: failure.errorMessage)),
+      (r) => emit(
+        PaymentSuccess(),
+      ),
+    );
   }
 
   void updateIndex(int index) {

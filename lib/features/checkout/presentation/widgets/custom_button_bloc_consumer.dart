@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:payment_project/core/get_transactions.dart';
 import 'package:payment_project/core/utils/api_keys.dart';
-import 'package:payment_project/features/checkout/data/cubits/payment_cubit/payment_cubit.dart';
-import 'package:payment_project/features/checkout/data/cubits/payment_cubit/payment_states.dart';
-import 'package:payment_project/features/checkout/presentation/views/thank_you_view/thank_you_view.dart';
-import '../../../../../../core/widgets/custom_button.dart';
-import '../../../../data/models/stripe/payment_intent/payment_intent_input.dart';
+
+import 'package:payment_project/features/checkout/presentation/views/thank_you_view.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../data/models/stripe/payment_intent/payment_intent_input.dart';
+import '../managers/cubits/payment_cubit/payment_cubit.dart';
+import '../managers/cubits/payment_cubit/payment_states.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
   const CustomButtonBlocConsumer({super.key});
@@ -18,13 +19,18 @@ class CustomButtonBlocConsumer extends StatelessWidget {
     return BlocConsumer<PaymentCubit, PaymentStates>(
       listener: (BuildContext context, Object? state) {
         if (state is PaymentSuccess) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const ThankYouView(),
-          ));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const ThankYouView(),
+            ),
+          );
         } else if (state is PaymentFailure) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage),
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -48,16 +54,17 @@ class CustomButtonBlocConsumer extends StatelessWidget {
 
 void executeStripePayment({required BuildContext context}) {
   BlocProvider.of<PaymentCubit>(context).makePayment(
-      paymentIntentInput: PaymentIntentInput(
-          currency: 'usd', amount: '200', customerId: 'cus_Qx9NI2eojWRXfj'));
+    paymentIntentInput: PaymentIntentInput(
+        currency: 'usd', amount: '200', customerId: 'cus_Qx9NI2eojWRXfj'),
+  );
 }
 
 void executePaypalPayment({required BuildContext context}) {
   Navigator.of(context).push(MaterialPageRoute(
     builder: (BuildContext context) => PaypalCheckoutView(
       sandboxMode: true,
-      clientId: ApiKeys.paypalClientId,
-      secretKey: ApiKeys.paypalSecretKey,
+      clientId: paypalClientId,
+      secretKey: paypalSecretKey,
       transactions: [getTransactionsData().toMap()],
       note: "Contact us for any questions on your order.",
       onSuccess: (Map params) async {
@@ -69,7 +76,7 @@ void executePaypalPayment({required BuildContext context}) {
         Navigator.pop(context);
       },
       onCancel: () {
-        print('cancelled:');
+        log('cancelled:');
         Navigator.pop(context);
       },
     ),

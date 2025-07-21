@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:payment_project/core/utils/api_keys.dart';
 
@@ -15,7 +13,7 @@ class ApiService {
         data: body,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
-            headers: headers ?? {'Authorization': 'Bearer ${ApiKeys.secretKey}'}));
+            headers: headers ?? {'Authorization': 'Bearer $stripeSecretKey'}));
     return response;
   }
 

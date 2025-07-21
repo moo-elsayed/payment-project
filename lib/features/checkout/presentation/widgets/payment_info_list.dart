@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_project/features/checkout/presentation/views/thank_you_view/widgets/payment_info_item.dart';
+import 'package:payment_project/features/checkout/presentation/widgets/payment_info_item.dart';
 
 class PaymentInfoList extends StatelessWidget {
   const PaymentInfoList({super.key});

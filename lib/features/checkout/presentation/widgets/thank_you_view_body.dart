@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:payment_project/core/utils/styles.dart';
 import 'package:payment_project/core/widgets/total_price.dart';
-import 'package:payment_project/features/checkout/presentation/views/thank_you_view/widgets/payment_info_list.dart';
-
+import 'package:payment_project/features/checkout/presentation/widgets/payment_info_list.dart';
 import 'card_info_widget.dart';
 
 class ThankYouViewBody extends StatelessWidget {
-  const ThankYouViewBody({super.key});
+  const ThankYouViewBody({super.key, required this.height});
+
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       decoration: ShapeDecoration(
-          color: const Color(0xffEDEDED),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+        color: const Color(0xffEDEDED),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
       child: Column(
         children: <Widget>[
           Padding(
@@ -55,9 +57,10 @@ class ThankYouViewBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(FontAwesomeIcons.barcode,size: 70),
+              const Icon(FontAwesomeIcons.barcode, size: 70),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 29,vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 29, vertical: 14),
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -75,7 +78,7 @@ class ThankYouViewBody extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: ((MediaQuery.of(context).size.height * .2 + 35 / 2) / 2) - 35 ,),
+          SizedBox(height: ((height * .2 + 35 / 2) / 2) - 35),
         ],
       ),
     );
