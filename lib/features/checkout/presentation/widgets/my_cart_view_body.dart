@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_project/core/utils/service_locator.dart';
 import 'package:payment_project/core/widgets/custom_button.dart';
 import 'package:payment_project/core/widgets/total_price.dart';
-import 'package:payment_project/features/checkout/data/repos/checkout_repo_imp.dart';
+import 'package:payment_project/features/checkout/domain/use_cases/stripe/stripe_checkout_use_case.dart';
+import 'package:payment_project/features/checkout/presentation/managers/cubits/stripe_cubit/stripe_cubit.dart';
 import 'package:payment_project/features/checkout/presentation/widgets/payment_methods_bottom_sheet.dart';
-
-import '../managers/cubits/payment_cubit/payment_cubit.dart';
 import 'order_info_item.dart';
 
 class MyCartViewBody extends StatelessWidget {
@@ -63,7 +63,8 @@ class MyCartViewBody extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return BlocProvider(
-                    create: (context) => PaymentCubit(CheckOutRepoImp()),
+                    create: (context) =>
+                        StripeCubit(getIt.get<StripeCheckoutUseCase>()),
                     child: const PaymentMethodsBottomSheet(),
                   );
                 },

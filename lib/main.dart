@@ -5,9 +5,12 @@ import 'package:payment_project/core/utils/api_keys.dart';
 import 'package:payment_project/features/checkout/presentation/views/my_cart_view.dart';
 import 'package:payment_project/simple_bloc_observer.dart';
 
+import 'core/utils/service_locator.dart';
+
 void main() {
   Stripe.publishableKey = stripePublishableKey;
   Bloc.observer = SimpleBlocObserver();
+  setupServiceLocator();
   runApp(const PaymentApp());
 }
 

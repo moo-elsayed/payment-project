@@ -11,7 +11,7 @@ class MyCartView extends StatelessWidget {
     return const AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.green,
+        statusBarColor: Colors.white,
       ),
       child: Scaffold(
         appBar: CustomAppBar(text: 'My Cart'),

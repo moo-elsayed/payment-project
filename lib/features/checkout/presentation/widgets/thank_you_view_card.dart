@@ -17,12 +17,14 @@ class ThankYouViewCard extends StatelessWidget {
           left: 20.0,
           right: 20,
           bottom: 27,
-          top: kToolbarHeight,
         ),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            ThankYouViewBody(height: sizeOfScreen.height),
+            Padding(
+              padding: const EdgeInsets.only(top: kToolbarHeight),
+              child: ThankYouViewBody(height: sizeOfScreen.height),
+            ),
             Positioned(
               bottom: sizeOfScreen.height * .2,
               left: -35 / 2,
@@ -34,8 +36,7 @@ class ThankYouViewCard extends StatelessWidget {
               child: const WhiteCircle(radius: 35 / 2),
             ),
             const Positioned(
-              top: -50,
-              //left: sizeOfScreen.width * .5 - 60,
+              top: kToolbarHeight - 50,
               left: 0,
               right: 0,
               child: CheckCircle(),
@@ -48,7 +49,7 @@ class ThankYouViewCard extends StatelessWidget {
             ),
             Positioned(
               left: 0,
-              top: -36,
+              top: 20,
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: SvgPicture.asset('assets/images/arrow_back.svg'),

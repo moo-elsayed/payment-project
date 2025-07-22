@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:payment_project/core/widgets/custom_button.dart';
 import 'package:payment_project/features/checkout/presentation/widgets/payment_item_list_view.dart';
 import 'package:payment_project/features/checkout/presentation/views/thank_you_view.dart';
-
 import 'custom_credit_card.dart';
 
 class PaymentDetailsBody extends StatefulWidget {
@@ -15,51 +14,65 @@ class PaymentDetailsBody extends StatefulWidget {
 class _PaymentDetailsBodyState extends State<PaymentDetailsBody> {
   final GlobalKey<FormState> globalKey = GlobalKey();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+  int paymentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: CustomScrollView(slivers: [
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 24,
+      child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 24,
+            ),
           ),
-        ),
-        const SliverToBoxAdapter(child: PaymentItemListView()),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 24,
+          SliverToBoxAdapter(
+            child: PaymentItemListView(
+              onChanged: (value) {
+                paymentIndex = value;
+              },
+            ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: CustomCreditCard(
-            autoValidateMode: autoValidateMode,
-            formKey: globalKey,
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 24,
+            ),
           ),
-        ),
-        SliverFillRemaining(
+          SliverToBoxAdapter(
+            child: CustomCreditCard(
+              autoValidateMode: autoValidateMode,
+              formKey: globalKey,
+            ),
+          ),
+          SliverFillRemaining(
             hasScrollBody: false,
             child: Align(
-                child: CustomButton(
-                    label: 'Pay',
-                    on: () {
-                      if (globalKey.currentState!.validate()) {
-                        globalKey.currentState!.save();
-                      } else {
-                        autoValidateMode = AutovalidateMode.always;
-                        setState(() {});
-                      }
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ThankYouView(),
-                      ));
-                    }))),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 12,
+              child: CustomButton(
+                label: 'Pay',
+                on: () {
+                  if (globalKey.currentState!.validate()) {
+                    globalKey.currentState!.save();
+                  } else {
+                    autoValidateMode = AutovalidateMode.always;
+                    setState(() {});
+                  }
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ThankYouView(),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
-        ),
-      ]),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
